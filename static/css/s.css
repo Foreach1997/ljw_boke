@@ -1,0 +1,12 @@
+#s {
+  height: 100%;
+  overflow: hidden;
+}
+
+#c {
+  background: radial-gradient(#222, #000);
+}
+
+canvas {
+  display: block;
+}

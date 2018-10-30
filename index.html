@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>ljw_boke</title>
+    <link rel="stylesheet" href="static/layui/css/layui.css">
+    <script src="static/js/jquery.min.js"/>
+    <script src="static/layui/layui.all.js"></script>
+    <script src="static/layui/layui.js"></script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <!-- built files will be auto injected -->
+  </body>
+</html>
+<script src="static/js/s.js"></script>
+<link rel="stylesheet" href="static/css/s.css">
+<script>
+  $('li').click(function(){
+    $(this).addClass('layui-this').siblings().removeClass('layui-this');
+  })
+</script>
