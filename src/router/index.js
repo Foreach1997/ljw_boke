@@ -5,6 +5,7 @@ import Home from '../components/Home'
 import Journal from '../components/Journal'
 import Author from '../components/Author'
 import Community from '../components/Community'
+import Com from '../components/Com'
 
 Vue.use(Router)
 
@@ -29,6 +30,10 @@ export default new Router({
     {
       path:'/',
       redirect:'/home'
+    },
+    {
+     path:'/com',
+     component: Com
     }
   ]
 })
