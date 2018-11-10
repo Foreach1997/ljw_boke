@@ -3,11 +3,11 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import Element from 'element-ui'
+import element from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import axios from 'axios';
 Vue.config.productionTip = false
-Vue.use(Element)
+Vue.use(element)
 Vue.prototype.$axios = axios;
 /* eslint-disable no-new */
 new Vue({

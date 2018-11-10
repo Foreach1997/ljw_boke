@@ -9,7 +9,7 @@
     </ul>
   </div>
   <div id="s" style="width: 100%;height: 110px">
-    <canvas id="c"></canvas>
+
   </div>
     <div>
       <router-view></router-view>
