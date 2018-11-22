@@ -10,11 +10,13 @@
           <ul class="fly-list">
             <li v-for="(item, index) in ArticleTitle">
               <a href="user/home.html" class="fly-avatar">
-                <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg" alt="贤心">
+               <!-- <img :src="item.photo" alt="贤心">-->
+                <img :src="item.photo" alt="贤心">
               </a>
               <h2>
                 <a class="layui-badge">{{item.articleType}}</a>
-                <a href="jie/detail.html">{{item.articleTitle}}</a>
+               <!-- <a href="jie/detail.html">{{item.articleTitle}}</a>-->
+                <router-link to="/com">{{item.articleTitle}}</router-link>
               </h2>
               <div class="fly-list-info">
                 <a href="user/home.html" link>
@@ -119,7 +121,7 @@
                   <el-input
                     type="textarea"
                     :rows="2"
-                    placeholder="留下一点的足迹吧?"
+                    placeholder="留下一点足迹吧?"
                     v-model="textarea">
                   </el-input>
                   <el-button type="success" style="margin-bottom:3px; margin-top:10px;margin-left:250px;width: 100px;height: 30px;float: right">发送</el-button>
@@ -135,6 +137,12 @@
                 <hr/>
               </li>
             </ul>
+            <div class="block" style="text-align: center" id="communicationPage">
+              <el-pagination
+                layout="prev, pager, next"
+                :total="communicationCount">
+              </el-pagination>
+            </div>
             <!-- 已签到状态 -->
             <!--
             <button class="layui-btn layui-btn-disabled">今日已签到</button>
@@ -144,122 +152,20 @@
         </div>
 
         <div class="fly-panel fly-rank fly-rank-reply" id="LAY_replyRank">
-          <h3 class="fly-panel-title">回贴周榜</h3>
+          <h3 class="fly-panel-title">来访记录</h3>
           <dl>
             <!--<i class="layui-icon fly-loading">&#xe63d;</i>-->
             <dd>
               <a href="user/home.html">
                 <img
-                  src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"><cite>贤心</cite><i>106次回答</i>
-              </a>
-            </dd>
-            <dd>
-              <a href="user/home.html">
-                <img
-                  src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"><cite>贤心</cite><i>106次回答</i>
-              </a>
-            </dd>
-            <dd>
-              <a href="user/home.html">
-                <img
-                  src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"><cite>贤心</cite><i>106次回答</i>
-              </a>
-            </dd>
-            <dd>
-              <a href="user/home.html">
-                <img
-                  src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"><cite>贤心</cite><i>106次回答</i>
-              </a>
-            </dd>
-            <dd>
-              <a href="user/home.html">
-                <img
-                  src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"><cite>贤心</cite><i>106次回答</i>
-              </a>
-            </dd>
-            <dd>
-              <a href="user/home.html">
-                <img
-                  src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"><cite>贤心</cite><i>106次回答</i>
-              </a>
-            </dd>
-            <dd>
-              <a href="user/home.html">
-                <img
-                  src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"><cite>贤心</cite><i>106次回答</i>
-              </a>
-            </dd>
-            <dd>
-              <a href="user/home.html">
-                <img
-                  src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"><cite>贤心</cite><i>106次回答</i>
-              </a>
-            </dd>
-            <dd>
-              <a href="user/home.html">
-                <img
-                  src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"><cite>贤心</cite><i>106次回答</i>
-              </a>
-            </dd>
-            <dd>
-              <a href="user/home.html">
-                <img
-                  src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"><cite>贤心</cite><i>106次回答</i>
-              </a>
-            </dd>
-            <dd>
-              <a href="user/home.html">
-                <img
-                  src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"><cite>贤心</cite><i>106次回答</i>
-              </a>
-            </dd>
-            <dd>
-              <a href="user/home.html">
-                <img
-                  src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"><cite>贤心</cite><i>106次回答</i>
+                  src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"><cite>贤心</cite><i>来访106次</i>
               </a>
             </dd>
           </dl>
         </div>
 
         <dl class="fly-panel fly-list-one">
-          <dt class="fly-panel-title">本周热议</dt>
-          <dd>
-            <a href="jie/detail.html">基于 layui 的极简社区页面模版</a>
-            <span><i class="iconfont icon-pinglun1"></i> 16</span>
-          </dd>
-          <dd>
-            <a href="jie/detail.html">基于 layui 的极简社区页面模版</a>
-            <span><i class="iconfont icon-pinglun1"></i> 16</span>
-          </dd>
-          <dd>
-            <a href="jie/detail.html">基于 layui 的极简社区页面模版</a>
-            <span><i class="iconfont icon-pinglun1"></i> 16</span>
-          </dd>
-          <dd>
-            <a href="jie/detail.html">基于 layui 的极简社区页面模版</a>
-            <span><i class="iconfont icon-pinglun1"></i> 16</span>
-          </dd>
-          <dd>
-            <a href="jie/detail.html">基于 layui 的极简社区页面模版</a>
-            <span><i class="iconfont icon-pinglun1"></i> 16</span>
-          </dd>
-          <dd>
-            <a href="jie/detail.html">基于 layui 的极简社区页面模版</a>
-            <span><i class="iconfont icon-pinglun1"></i> 16</span>
-          </dd>
-          <dd>
-            <a href="jie/detail.html">基于 layui 的极简社区页面模版</a>
-            <span><i class="iconfont icon-pinglun1"></i> 16</span>
-          </dd>
-          <dd>
-            <a href="jie/detail.html">基于 layui 的极简社区页面模版</a>
-            <span><i class="iconfont icon-pinglun1"></i> 16</span>
-          </dd>
-          <dd>
-            <a href="jie/detail.html">基于 layui 的极简社区页面模版</a>
-            <span><i class="iconfont icon-pinglun1"></i> 16</span>
-          </dd>
+          <dt class="fly-panel-title">热议</dt>
           <dd>
             <a href="jie/detail.html">基于 layui 的极简社区页面模版</a>
             <span><i class="iconfont icon-pinglun1"></i> 16</span>
@@ -270,7 +176,7 @@
           -->
         </dl>
 
-        <div class="fly-panel">
+        <!--<div class="fly-panel">
           <div class="fly-panel-title">
             这里可作为广告区域
           </div>
@@ -278,7 +184,7 @@
             <a href="http://layim.layui.com/?from=fly" target="_blank" class="fly-zanzhu"
                time-limit="2017.09.25-2099.01.01" style="background-color: #5FB878;">LayIM 3.0 - layui 旗舰之作</a>
           </div>
-        </div>
+        </div>-->
       </div>
     </div>
   </div>
@@ -289,14 +195,15 @@
     data () {
       return {
         ArticleTitle: [],
-        solr: [{name: '所有', id: 'ww'},{name: '动态', id: 'qq'}, {name: '提问', id: 'bb'}, {name: '讨论', id: 'aa'}, {name: '公告', id: 'dd'}, {name: '热议', id: 'ee'}],
+        solr: [{name: '所有', id: 'ww'},{name: '动态', id: 'qq'}, {name: '提问', id: 'bb'}, {name: '讨论', id: 'aa'}, {name: '公告', id: 'dd'}, {name: '精贴', id: 'ee'}],
         ArticleTitles: [],
         count:0,
         currentPage:1,
         articleType: '',
         connectData:[],
         show:false,
-        textarea:''
+        textarea:'',
+        communicationCount:40
       }
     },
     mounted:function() {
@@ -321,7 +228,7 @@
      begin () {
         var that = this;
         $.ajax({
-        url:'http://localhost:8080/ArticleTitle/PageArticleTitles',
+        url:'http://47.107.55.207:8080/ArticleTitle/PageArticleTitles',
         type:'GET', //GET
         async:false,    //或false,是否异步
         data:{
@@ -355,7 +262,7 @@
       connect () {
         var that = this;
         $.ajax({
-          url:'http://localhost:8080/connect/connectDesc',
+          url:'http://47.107.55.207:8080/connect/connectDesc',
           type:'GET', //GET
           async:false,    //或false,是否异步
           data:{
@@ -370,7 +277,7 @@
     },
     created: function () {
       var that = this
-      this.$axios.get('http://localhost:8080/ArticleTitle/ArticleTitles')
+      this.$axios.get('http://47.107.55.207:8080/ArticleTitle/ArticleTitles')
         .then(function (response) {
           that.ArticleTitle = response.data.data
         })
@@ -381,5 +288,10 @@
 </script>
 
 <style scoped>
+/*#communicationPage{
+  position: absolute;
+  left: 50%;
+  right: 50%;
 
+}*/
 </style>
