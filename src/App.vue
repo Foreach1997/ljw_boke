@@ -13,6 +13,9 @@
           </router-link>
         </div>
       </li>
+      <li id="quit" style="display: none;" class="layui-nav-item">
+        <a href="" @click="quit" style="margin-left: 5px;">退出</a>
+      </li>
     </ul>
   </div>
   <div id="s" style="width: 100%;height: 110px">
@@ -32,13 +35,28 @@ export default {
 
      }
   },
+  mounted:function(){
+    this.$login();
+    this.$checkLogin();
+  },
   methods:{
-
+    quit () {
+      var that = this;
+      $.ajax({
+        url:'http://localhost:8080/user/quit',
+        type:'GET', //GET
+        xhrFields: {withCredentials: true},
+        crossDomain:true,
+        success:function (res) {
+          that.$cookie.get("IsFlag");
+          //that.$router.replace('/community');
+        }
+      })
+    }
+  },
+  created:function () {
 
   }
-
-
-
 }
 </script>
 <style>

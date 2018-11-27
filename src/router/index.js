@@ -10,7 +10,6 @@ import Login from '../components/user/login'
 import Reg from  '../components/user/reg'
 import Detail from '../components/user/detail'
 
-
 Vue.use(Router)
 
 export default new Router({

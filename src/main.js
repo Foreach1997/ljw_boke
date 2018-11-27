@@ -7,8 +7,40 @@ import element from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import axios from 'axios';
 import cookie from 'vue-js-cookie';
-
+/*import login from '../static/js/login'*/
 Vue.config.productionTip = false
+
+Vue.prototype.$login =function(){
+  const IsFlag =  this.$cookie.get("IsFlag");
+  console.log(this.$cookie.get("userId"));
+  console.log(this.$cookie.get("JSESSIONID"));
+  console.log(IsFlag)
+  if (IsFlag == "true"){
+    console.log("312312312")
+    $('#loginName').html("<a href='#/user/Detail'><img src="+this.$cookie.get("photo")+" class='layui-nav-img'>"+this.$cookie.get("name")+"</a>")
+    $('#quit').show();
+  }else {
+    $('#loginName').html("<a href='#/user/login'><i class='layui-icon'>&#xe66f;</i><span>&nbsp;登录</span></a>");
+  }
+}
+Vue.prototype.$checkLogin = function(){
+  $.ajax({
+    url:'http://localhost:8080/user/checkLogin',
+    type:'GET',
+    success:function (res) {
+      console.log("xiaoluo")
+      if (res.code==200){
+        $('#loginName').html("<a href='#/user/login'><i class='layui-icon'>&#xe66f;</i><span>&nbsp;登录</span></a>");
+        $('#quit').hide();
+      }
+    }
+  })
+  
+  
+}
+
+
+
 Vue.use(element)
 Vue.prototype.$axios = axios;
 Vue.prototype.$cookie = cookie;
