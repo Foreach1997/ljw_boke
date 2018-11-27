@@ -1,102 +1,144 @@
 <template>
   <div class="layui-container">
     <div class="layui-row layui-col-space15">
-      <div class="layui-col-md8">
-        <div class="fly-panel">
-          <div class="fly-panel-title fly-filter">
-            <a>置顶</a>
-            <!-- <a href="#signin" class="layui-hide-sm layui-show-xs-block fly-right" id="LAY_goSignin" style="color: #FF5722;">去签到</a>-->
-          </div>
-          <ul class="fly-list">
-            <li v-for="(item, index) in ArticleTitle">
-              <a href="user/home.html" class="fly-avatar">
-                <!-- <img :src="item.photo" alt="贤心">-->
-                <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg" alt="贤心">
-              </a>
-              <h2>
-                <a class="layui-badge">{{item.articleType}}</a>
-                <!--<a href="jie/detail.html">{{item.articleTitle}}</a>-->
-              </h2>
-              <div class="fly-list-info">
-                <a href="user/home.html" link>
-                  <cite>{{item.name}}</cite>
-                </a>
-                <span>{{item.createTime}}</span>
-
-                <!--
-                                <span class="fly-list-kiss layui-hide-xs" title="悬赏飞吻"><i class="iconfont icon-kiss"></i> 60</span>
-                -->
-                <!--
-                                <span class="layui-badge fly-badge-accept layui-hide-xs">已结</span>
-                -->
-                <span class="fly-list-nums">
-                <i class="iconfont icon-pinglun1" title="回答"></i>{{item.replyCount}}
-              </span>
-              </div>
-              <div class="fly-list-badge">
-                <!--
-                <span class="layui-badge layui-bg-black">置顶</span>
-                -->
-                <span class="layui-badge layui-bg-red" v-if="item.articleType=='精帖'">精帖</span>
-
-              </div>
-            </li>
-          </ul>
+      <div class="layui-col-md8 content detail">
+        <div class="fly-panel detail-box">
+          <h1>Fly Template v3.0，基于 layui 的极简社区页面模版</h1>
         </div>
-        <div class="fly-panel" style="margin-bottom: 0;">
 
-          <div class="fly-panel-title fly-filter">
-          <span class="fly-filter-right layui-hide-xs">
-          <a href="" class="" :id="item.id"  v-for="(item, index) in solr"
-             @click.prevent="type($event)">{{item.name}}</a>
-            <!--  <a href="">提问</a>
-              <span class="fly-mid"></span>
-              <a href="">讨论</a>
-              <span class="fly-mid"></span>
-              <a href="">公告</a>
-              <span class="fly-mid"></span>
-              <a href="">热议</a>-->
-          </span>
-          </div>
+        <!-- 帖子主体部分-->
 
-          <ul class="fly-list">
-            <li v-for="(item,index) in ArticleTitles">
-              <a href="user/home.html" class="fly-avatar">
-                <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg" alt="贤心">
-              </a>
-              <h2>
-                <a class="layui-badge">{{item.articleType}}</a>
-                <a href="jie/detail.html">{{item.articleTitle}}</a>
-              </h2>
-              <div class="fly-list-info">
-                <a href="user/home.html" link>
-                  <cite>{{item.name}}</cite>
-                  <!--
-                  <i class="iconfont icon-renzheng" title="认证信息：XXX"></i>
-                  <i class="layui-badge fly-badge-vip">VIP3</i>
-                  -->
-                </a>
-                <span>{{item.createTime}}</span>
+        <div class="fly-panel detail-box">
+        <div class="detail-body photos detail-box">
+          <p>
+            该模版由 layui官方社区（<a href="http://fly.layui.com/" target="_blank">fly.layui.com</a>）倾情提供，只为表明我们对 layui 执着的信念、以及对未来持续加强的承诺。该模版基于 layui 搭建而成，可作为极简通用型社区的页面支撑。
+          </p>
+          <p>更新日志：</p>
+          <pre>
+          # v3.0 2017-11-30
+          * 采用 layui 2.2.3 作为 UI 支撑
+          * 全面同步最新的 Fly 社区风格，各种细节得到大幅优化
+          * 更友好的响应式适配能力
+          </pre>
 
-                <span class="fly-list-kiss layui-hide-xs" title="浏览量"><i class="layui-icon">&#xe67a;</i>{{item.browseCount}}</span>
-                <!--<span class="layui-badge fly-badge-accept layui-hide-xs">已结</span>-->
-                <span class="fly-list-nums">
-                <i class="iconfont icon-pinglun1" title="回答"></i>{{item.replyCount}}
-              </span>
-              </div>
-              <div class="fly-list-badge">
-                <!--<span class="layui-badge layui-bg-red">精帖</span>-->
-              </div>
-            </li>
-          </ul>
-          <div style="text-align: center">
-
-            <!--<a href="jie/index.html" class="laypage-next">更多求解</a>-->
-            <div id="demo0"></div>
-          </div>
-
+          下载<hr>
+          <p>
+            官网：<a href="http://www.layui.com/template/fly/" target="_blank">http://www.layui.com/template/fly/</a><br>
+            码云：<a href="https://gitee.com/sentsin/fly/" target="_blank">https://gitee.com/sentsin/fly/</a><br>
+            GitHub：<a href="https://github.com/layui/fly" target="_blank">https://github.com/layui/fly</a>
+          </p>
         </div>
       </div>
+
+       <!-- 回帖部分-->
+
+        <div class="fly-panel detail-box" id="flyReply">
+          <fieldset class="layui-elem-field layui-field-title" style="text-align: center;">
+            <legend>回帖</legend>
+          </fieldset>
+
+          <ul class="jieda" id="jieda">
+            <li data-id="111" class="jieda-daan">
+              <a name="item-1111111111"></a>
+              <div class="detail-about detail-about-reply">
+                <a class="fly-avatar" href="">
+                  <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg" alt=" ">
+                </a>
+                <div class="fly-detail-user">
+                  <a href="" class="fly-link">
+                    <cite>贤心</cite>
+                    <i class="iconfont icon-renzheng" title="认证信息：XXX"></i>
+                    <i class="layui-badge fly-badge-vip">VIP3</i>
+                  </a>
+
+                  <span>(楼主)</span>
+                  &lt;!&ndash;
+                  <span style="color:#5FB878">(管理员)</span>
+                  <span style="color:#FF9E3F">（社区之光）</span>
+                  <span style="color:#999">（该号已被封）</span>
+                  &ndash;&gt;
+                </div>
+
+                <div class="detail-hits">
+                  <span>2017-11-30</span>
+                </div>
+
+                <i class="iconfont icon-caina" title="最佳答案"></i>
+              </div>
+              <div class="detail-body jieda-body photos">
+                <p>香菇那个蓝瘦，这是一条被采纳的回帖</p>
+              </div>
+              <div class="jieda-reply">
+              <span class="jieda-zan zanok" type="zan">
+                <i class="iconfont icon-zan"></i>
+                <em>66</em>
+              </span>
+                <span type="reply">
+                <i class="iconfont icon-svgmoban53"></i>
+                回复
+              </span>
+                <div class="jieda-admin">
+                  <span type="edit">编辑</span>
+                  <span type="del">删除</span>
+                  &lt;!&ndash; <span class="jieda-accept" type="accept">采纳</span> &ndash;&gt;
+                </div>
+              </div>
+            </li>
+
+            <li data-id="111">
+              <a name="item-1111111111"></a>
+              <div class="detail-about detail-about-reply">
+                <a class="fly-avatar" href="">
+                  <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg" alt=" ">
+                </a>
+                <div class="fly-detail-user">
+                  <a href="" class="fly-link">
+                    <cite>贤心</cite>
+                  </a>
+                </div>
+                <div class="detail-hits">
+                  <span>2017-11-30</span>
+                </div>
+              </div>
+              <div class="detail-body jieda-body photos">
+                <p>蓝瘦那个香菇，这是一条没被采纳的回帖</p>
+              </div>
+              <div class="jieda-reply">
+              <span class="jieda-zan" type="zan">
+                <i class="iconfont icon-zan"></i>
+                <em>0</em>
+              </span>
+                <span type="reply">
+                <i class="iconfont icon-svgmoban53"></i>
+                回复
+              </span>
+                <div class="jieda-admin">
+                  <span type="edit">编辑</span>
+                  <span type="del">删除</span>
+                  <span class="jieda-accept" type="accept">采纳</span>
+                </div>
+              </div>
+            </li>
+
+            <li class="fly-none">消灭零回复</li>
+          </ul>
+
+          <div style="text-align: center">
+          <div id="demo0"></div>
+          </div>
+
+          <div class="layui-form layui-form-pane">
+            <fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
+            </fieldset>
+            <textarea class="layui-textarea" id="edit" style="display: none">
+            把编辑器的初始内容放在这textarea即可
+            </textarea>
+            <button class="layui-btn" id="editSumbit" style="margin-top: 20px" lay-filter="*" lay-submit>提交回复</button>
+          </div>
+        </div>
+    </div>
+
+
       <div class="layui-col-md4">
 
         <div class="fly-panel">
@@ -195,12 +237,15 @@
       return {
         connectData:[],
         textarea:'',
-        show:false
+        show:false,
+        communicationCount:40
       }
 
     },
     mounted:function() {
       this.connect();
+      this.edit();
+      this.page();
     },
     methods:{
       connect () {
@@ -216,6 +261,35 @@
             console.log(respose)
             that.connectData = respose.data
           }
+        })
+      },
+      edit () {
+        layui.use('layedit',function () {
+          var layedit = layui.layedit;
+          var index = layedit.build('edit', {
+            height: 180 //设置编辑器高度
+          });
+          $('#editSumbit').on('click',function () {
+            var content =  layedit.getContent(index);
+            console.log(content)
+          })
+        })
+      },
+      page () {
+        var that = this;
+        layui.use('laypage', function(){
+          var laypage = layui.laypage;
+          //执行一个laypage实例
+          laypage.render({
+            elem: 'demo0',
+            limit:8
+            ,count: 40
+            ,jump: function(obj){
+            /*  that.currentPage = obj.curr
+              console.log( obj.curr)
+              that.begin();*/
+            }
+          });
         })
       }
     },

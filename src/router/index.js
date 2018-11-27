@@ -7,14 +7,15 @@ import Author from '../components/Author'
 import Community from '../components/Community'
 import Com from '../components/Com'
 import Login from '../components/user/login'
-import Reg from  '../components/user/reg'
+import Reg from '../components/user/reg'
 import Detail from '../components/user/detail'
+import Report from '../components/user/report'
 
 Vue.use(Router)
 
 export default new Router({
-  /*mode: 'history',
-  base: '/ljw_boke/',*/
+  /* mode: 'history',
+  base: '/ljw_boke/', */
   routes: [
     {
       path: '/home',
@@ -33,24 +34,28 @@ export default new Router({
       component: Community
     },
     {
-      path:'/',
-      redirect:'/community'
+      path: '/',
+      redirect: '/community'
     },
     {
-     path:'/com',
-     component: Com
+      path: '/com',
+      component: Com
     },
     {
-      path:'/user/login',
+      path: '/user/login',
       component: Login
     },
     {
-      path:'/user/reg',
+      path: '/user/reg',
       component: Reg
     },
     {
-      path:'/user/Detail',
+      path: '/user/detail',
       component: Detail
+    },
+    {
+      path: '/user/report',
+      component: Report
     }
   ]
 })
