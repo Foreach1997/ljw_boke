@@ -10,6 +10,8 @@ import Login from '../components/user/login'
 import Reg from '../components/user/reg'
 import Detail from '../components/user/detail'
 import Report from '../components/user/report'
+import userHome from '../components/user/userHome'
+import MyCard from '../components/user/card/myCard'
 
 Vue.use(Router)
 
@@ -56,6 +58,14 @@ export default new Router({
     {
       path: '/user/report',
       component: Report
+    },
+    {
+      path: '/user/userHome',
+      component: userHome,
+      children: [{
+        path: '/user/card/myCard',
+        component: MyCard
+      }]
     }
   ]
 })
