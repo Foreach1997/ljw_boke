@@ -24,19 +24,22 @@ Vue.prototype.$login =function(){
   }
 }
 Vue.prototype.$checkLogin = function(){
+  var flag = true;
   $.ajax({
     url:'http://localhost:8080/user/checkLogin',
     type:'GET',
-    success:function (res) {
-      console.log("xiaoluo")
-      if (res.code==200){
+    async:false,
+    success:function  (res)  {
+     flag = false;
+      if (res.code == 200) {
         $('#loginName').html("<a href='#/user/login'><i class='layui-icon'>&#xe66f;</i><span>&nbsp;登录</span></a>");
         $('#quit').hide();
+      } else {
+        $('#loginName').html("<a href='#/user/login'><i class='layui-icon'>&#xe66f;</i><span>&nbsp;登录</span></a>");
       }
     }
   })
-  
-  
+  return flag;
 }
 
 

@@ -131,7 +131,7 @@
             <fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
             </fieldset>
             <textarea class="layui-textarea" id="edit" style="display: none">
-            把编辑器的初始内容放在这textarea即可
+
             </textarea>
             <button class="layui-btn" id="editSumbit" style="margin-top: 20px" lay-filter="*" lay-submit>提交回复</button>
           </div>

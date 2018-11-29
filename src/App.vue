@@ -36,8 +36,8 @@ export default {
      }
   },
   mounted:function(){
-    this.$login();
-    this.$checkLogin();
+    //this.$login();
+    //this.$checkLogin();
   },
   methods:{
     quit () {
