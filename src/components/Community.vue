@@ -6,6 +6,7 @@
           <div class="fly-panel-title fly-filter">
             <a>置顶</a>
             <router-link to="user/report">发表</router-link>
+            <router-link to="user/userHome">发表</router-link>
             <!-- <a href="#signin" class="layui-hide-sm layui-show-xs-block fly-right" id="LAY_goSignin" style="color: #FF5722;">去签到</a>-->
           </div>
           <ul class="fly-list">
