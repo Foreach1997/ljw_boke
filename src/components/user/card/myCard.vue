@@ -13,9 +13,17 @@
       width="180">
     </el-table-column>
     <el-table-column
-      prop="address"
+
       label="地址">
-    </el-table-column>
+    <template slot-scope="scope">
+      <el-button
+        @click.native.prevent="deleteRow(scope.$index, tableData)"
+        type="text"
+        size="small">
+       {{scope.row.address}}
+      </el-button>
+    </template>
+      </el-table-column>
   </el-table>
 </template>
 
@@ -40,6 +48,13 @@
           name: '王小虎',
           address: '上海市普陀区金沙江路 1516 弄'
         }]
+      }
+    },
+    methods:{
+      deleteRow(index, rows) {
+      //  rows.splice(index, 1);
+        console.log(index)
+        console.log(rows[0].name)
       }
     }
   }

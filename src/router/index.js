@@ -12,6 +12,8 @@ import Detail from '../components/user/detail'
 import Report from '../components/user/report'
 import userHome from '../components/user/userHome'
 import MyCard from '../components/user/card/myCard'
+import MyInfo from '../components/user/card/myInfo'
+import MyInfoA from '../components/user/card/myInfoA'
 
 Vue.use(Router)
 
@@ -65,7 +67,16 @@ export default new Router({
       children: [{
         path: '/user/card/myCard',
         component: MyCard
-      }]
+      },
+      {
+        path: '/user/card/myInfo',
+        component: MyInfo,
+        children: [{
+          path: '/user/card/myInfoA',
+          component: MyInfoA
+        }]
+      }
+      ]
     }
   ]
 })

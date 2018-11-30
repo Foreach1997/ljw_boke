@@ -1,5 +1,5 @@
 <template>
-  <div class="layui-container fly-marginTop">
+  <div style="margin-top: -80px;" class="layui-container fly-marginTop">
     <div class="fly-panel" pad20 style="padding-top: 5px;">
       <!--<div class="fly-none">没有权限</div>-->
       <div class="layui-form layui-form-pane">
