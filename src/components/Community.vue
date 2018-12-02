@@ -6,7 +6,6 @@
           <div class="fly-panel-title fly-filter">
             <a>置顶</a>
             <router-link to="user/report">发表</router-link>
-            <router-link to="user/userHome">发表</router-link>
             <!-- <a href="#signin" class="layui-hide-sm layui-show-xs-block fly-right" id="LAY_goSignin" style="color: #FF5722;">去签到</a>-->
           </div>
           <ul class="fly-list">
@@ -18,7 +17,7 @@
               <h2>
                 <a class="layui-badge">{{item.articleType}}</a>
                <!-- <a href="jie/detail.html">{{item.articleTitle}}</a>-->
-                <router-link to="/com">{{item.articleTitle}}</router-link>
+                <router-link :to="{name:'Com',query:{articleId:item.articleId}}">{{item.articleTitle}}</router-link>
               </h2>
               <div class="fly-list-info">
                 <a href="user/home.html" link>
@@ -69,7 +68,8 @@
               </a>
               <h2>
                 <a class="layui-badge">{{item.articleType}}</a>
-                <a href="jie/detail.html">{{item.articleTitle}}</a>
+               <!-- <a href="jie/detail.html">{{item.articleTitle}}</a>-->
+                <router-link :to="{name:'Com',query:{articleId:item.articleId}}">{{item.articleTitle}}</router-link>
               </h2>
               <div class="fly-list-info">
                 <a href="user/home.html" link>
@@ -230,7 +230,7 @@
      begin () {
         var that = this;
         $.ajax({
-        url:'http://47.107.55.207:8080/ArticleTitle/PageArticleTitles',
+        url:that.devUrl+'ArticleTitle/PageArticleTitles',
         type:'GET', //GET
         async:false,    //或false,是否异步
         data:{
@@ -264,7 +264,7 @@
       connect () {
         var that = this;
         $.ajax({
-          url:'http://47.107.55.207:8080/connect/connectDesc',
+          url:that.devUrl+'connect/connectDesc',
           type:'GET', //GET
           async:false,    //或false,是否异步
           data:{
@@ -279,7 +279,7 @@
     },
     created: function () {
       var that = this
-      this.$axios.get('http://47.107.55.207:8080/ArticleTitle/ArticleTitles')
+      this.$axios.get(that.devUrl+'ArticleTitle/ArticleTitles')
         .then(function (response) {
           that.ArticleTitle = response.data.data
         })

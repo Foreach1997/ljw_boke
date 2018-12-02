@@ -3,14 +3,14 @@
     <div class="layui-row layui-col-space15">
       <div class="layui-col-md8 content detail">
         <div class="fly-panel detail-box">
-          <h1>Fly Template v3.0，基于 layui 的极简社区页面模版</h1>
+          <h1>{{title}}</h1>
         </div>
 
         <!-- 帖子主体部分-->
 
         <div class="fly-panel detail-box">
-        <div class="detail-body photos detail-box">
-          <p>
+        <div class="detail-body photos detail-box" v-html="context">
+        <!--  <p>
             该模版由 layui官方社区（<a href="http://fly.layui.com/" target="_blank">fly.layui.com</a>）倾情提供，只为表明我们对 layui 执着的信念、以及对未来持续加强的承诺。该模版基于 layui 搭建而成，可作为极简通用型社区的页面支撑。
           </p>
           <p>更新日志：</p>
@@ -26,7 +26,7 @@
             官网：<a href="http://www.layui.com/template/fly/" target="_blank">http://www.layui.com/template/fly/</a><br>
             码云：<a href="https://gitee.com/sentsin/fly/" target="_blank">https://gitee.com/sentsin/fly/</a><br>
             GitHub：<a href="https://github.com/layui/fly" target="_blank">https://github.com/layui/fly</a>
-          </p>
+          </p>-->
         </div>
       </div>
 
@@ -38,54 +38,81 @@
           </fieldset>
 
           <ul class="jieda" id="jieda">
-            <li data-id="111" class="jieda-daan">
+            <li data-id="111" class="jieda-daan" v-for="(item,index) in findReply">
               <a name="item-1111111111"></a>
               <div class="detail-about detail-about-reply">
                 <a class="fly-avatar" href="">
-                  <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg" alt=" ">
+                  <img :src="item.photo" alt=" ">
                 </a>
                 <div class="fly-detail-user">
                   <a href="" class="fly-link">
-                    <cite>贤心</cite>
-                    <i class="iconfont icon-renzheng" title="认证信息：XXX"></i>
-                    <i class="layui-badge fly-badge-vip">VIP3</i>
+                    <cite>{{item.name}}</cite>
                   </a>
-
-                  <span>(楼主)</span>
-                  &lt;!&ndash;
-                  <span style="color:#5FB878">(管理员)</span>
-                  <span style="color:#FF9E3F">（社区之光）</span>
-                  <span style="color:#999">（该号已被封）</span>
-                  &ndash;&gt;
+                  <span v-if="item.userId == userId">(楼主)</span>
                 </div>
 
                 <div class="detail-hits">
-                  <span>2017-11-30</span>
+                  <span>{{item.createTime}}</span>
                 </div>
 
-                <i class="iconfont icon-caina" title="最佳答案"></i>
               </div>
-              <div class="detail-body jieda-body photos">
-                <p>香菇那个蓝瘦，这是一条被采纳的回帖</p>
+              <div class="detail-body jieda-body photos" v-html="item.text">
+
+              </div>
+
+
+              <!--                   分割                           -->
+
+
+              <div style="padding-left: 80px">
+                <ul class="jieda" id="jieda">
+                  <li data-id="111" class="jieda-daan" v-for="(it,i) in item.replyUserEntity">
+                    <a name="item-1111111111"></a>
+                    <div class="detail-about detail-about-reply">
+                      <a class="fly-avatar" href="">
+                        <img style="width: 30px;height: 30px"  :src="it.photo" alt=" ">
+                      </a>
+                      <div class="fly-detail-user">
+                        <a href="" class="fly-link">
+                          <cite>{{it.name}}</cite>
+                        </a>
+                        <span v-if="it.userId == userId">(楼主)</span>
+                        <span>{{it.createTime}}</span>
+                      </div>
+                    </div>
+                    <div class="detail-body jieda-body photos" v-html="it.note">
+
+                    </div>
+                    <div class="jieda-reply">
+                      <span type="reply" @click="reply(it)">
+                      <i class="iconfont icon-svgmoban53"></i>
+                       回复
+                      </span>
+                     <!-- <div class="jieda-admin">
+                        &lt;!&ndash;  <span type="edit">编辑</span>&ndash;&gt;
+                        <span type="del">删除</span>
+                      </div>-->
+                    </div>
+                  </li>
+                </ul>
               </div>
               <div class="jieda-reply">
-              <span class="jieda-zan zanok" type="zan">
+              <!--<span class="jieda-zan zanok" type="zan">
                 <i class="iconfont icon-zan"></i>
                 <em>66</em>
-              </span>
-                <span type="reply">
+              </span>-->
+                <span type="reply" @click="reply(item)">
                 <i class="iconfont icon-svgmoban53"></i>
                 回复
               </span>
                 <div class="jieda-admin">
-                  <span type="edit">编辑</span>
-                  <span type="del">删除</span>
-                  &lt;!&ndash; <span class="jieda-accept" type="accept">采纳</span> &ndash;&gt;
+                <!--  <span type="edit">编辑</span>-->
+                <!--  <span type="del">删除</span>-->
                 </div>
               </div>
             </li>
 
-            <li data-id="111">
+          <!--  <li data-id="111">
               <a name="item-1111111111"></a>
               <div class="detail-about detail-about-reply">
                 <a class="fly-avatar" href="">
@@ -104,10 +131,10 @@
                 <p>蓝瘦那个香菇，这是一条没被采纳的回帖</p>
               </div>
               <div class="jieda-reply">
-              <span class="jieda-zan" type="zan">
+              &lt;!&ndash;<span class="jieda-zan" type="zan">
                 <i class="iconfont icon-zan"></i>
                 <em>0</em>
-              </span>
+              </span>&ndash;&gt;
                 <span type="reply">
                 <i class="iconfont icon-svgmoban53"></i>
                 回复
@@ -115,10 +142,9 @@
                 <div class="jieda-admin">
                   <span type="edit">编辑</span>
                   <span type="del">删除</span>
-                  <span class="jieda-accept" type="accept">采纳</span>
                 </div>
               </div>
-            </li>
+            </li>-->
 
             <li class="fly-none">消灭零回复</li>
           </ul>
@@ -235,23 +261,107 @@
   export default {
     data () {
       return {
+        title:'',
         connectData:[],
         textarea:'',
         show:false,
-        communicationCount:40
+        communicationCount:40,
+        articleId:'',
+        context:'',
+        findReply:[],
+        count:0,
+        currentPage:1,
+        userId:'',
+        coverUserId:''
       }
 
     },
     mounted:function() {
       this.connect();
       this.edit();
-      this.page();
+     // this.page();
+      //this.findReplyA();
     },
     methods:{
+
+      reply (it){
+        const  that = this;
+        const checkLogin = this.$checkLogin();
+        const name = it.name;
+        const coverUserId = it.userId;
+        const photo = this.$cookie.get("photo");
+        const nameA = this.$cookie.get("name");
+        const userId = this.$cookie.get("userId");
+        const replyId = it.replyId;
+        console.log("----------"+replyId)
+        console.log(it.name)
+        var i = layer.open({
+            type: 1,
+            title: '回复',
+            skin: 'layui-layer-rim', //加上边框
+            area: ['820px', '350px'], //宽高
+            content: '<textarea class="layui-textarea" id="rep" style="display: none">'+'@'+name+':</textarea>' +
+              '<button class="layui-btn" id="repsumbit" style="margin-top: 20px;margin-left: 600px" lay-filter="*" lay-submit>提交回复</button>'
+          })
+
+        console.log("Com  "+checkLogin)
+        if (!checkLogin){
+          layer.close(i);
+          that.$router.replace('/user/login');
+          that.$message({
+            showClose: true,
+            message: '请先登录',
+            customClass: 'article',
+            type: 'warning'
+          });
+        }
+
+        layui.use(['layedit','layer'],function () {
+          var layedit = layui.layedit;
+          var layer = layui.layer;
+           layedit.set({
+             uploadImage: {
+               url: that.devUrl+'article/uploadPhoto' //接口url
+               ,type: 'POST' //默认post
+             }
+           });
+          var index = layedit.build('rep', {
+            height: 180 //设置编辑器高度
+          });
+          $('#repsumbit').on('click',function () {
+            var content = layedit.getContent(index);
+            if (content == '') {
+              layer.msg('请填写内容');
+            }else{
+              $.ajax({
+                url:that.devUrl+'replyUser/saveReplyUser',
+                type:'POST', //GET
+                async:false,    //或false,是否异步
+                data:{
+                  coverUserId:coverUserId,
+                  note:content,
+                  photo:photo,
+                  name:nameA,
+                  userId:userId,
+                  replyId:replyId,
+                  coverName:name
+                },
+                success:function(respose){
+                  console.log(respose);
+                  layer.close(i);
+                  that.findReplyA();
+                  layer.msg('回复成功');
+                }
+              })
+            }
+          })
+        })
+      },
+
       connect () {
         var that = this;
         $.ajax({
-          url:'http://47.107.55.207:8080/connect/connectDesc',
+          url:that.devUrl+'connect/connectDesc',
           type:'GET', //GET
           async:false,    //或false,是否异步
           data:{
@@ -264,6 +374,11 @@
         })
       },
       edit () {
+        const that = this;
+        const checkLogin = this.$checkLogin();
+        const photo = this.$cookie.get("photo");
+        const nameA = this.$cookie.get("name");
+        const userId = this.$cookie.get("userId");
         layui.use('layedit',function () {
           var layedit = layui.layedit;
           var index = layedit.build('edit', {
@@ -272,6 +387,40 @@
           $('#editSumbit').on('click',function () {
             var content =  layedit.getContent(index);
             console.log(content)
+
+            console.log("Com  "+checkLogin)
+
+            if (!checkLogin){
+              that.$router.replace('/user/login');
+              that.$message({
+                showClose: true,
+                message: '请先登录',
+                customClass: 'article',
+                type: 'warning'
+              });
+            }else {
+            if (content == '') {
+              layer.msg('请填写内容');
+            }else{
+              $.ajax({
+                url:that.devUrl+'reply/saveReply',
+                type:'POST', //GET
+                async:false,    //或false,是否异步
+                data:{
+                  text:content,
+                  photo:photo,
+                  name:nameA,
+                  userId:userId,
+                  articleId:that.articleId
+                },
+                success:function(respose){
+                  console.log(respose);
+                  that.findReplyA();
+                  layer.msg('回复成功');
+                  }
+                 })
+              }
+            }
           })
         })
       },
@@ -291,11 +440,48 @@
             }
           });
         })
+      },
+      article () {
+        var that = this;
+        $.ajax({
+          url:that.devUrl+'article/articleText',
+          type:'GET', //GET
+          async:false,    //或false,是否异步
+          data:{
+            articleId:that.articleId
+          },
+          success:function(respose){
+            console.log(respose)
+            that.context = respose.data.articleEntitys.article;
+            that.userId = respose.data.articleEntitys.userId;
+            console.log( that.userId)
+            that.title = respose.data.articleEntitys.articleTitle;
+          }
+        })
+      },
+      findReplyA () {
+        var that = this;
+        $.ajax({
+          url:that.devUrl+'reply/findReply',
+          type:'GET', //GET
+          async:true,    //或false,是否异步
+          data:{
+            articleId:that.articleId,
+            currentPage: that.currentPage
+          },
+          success:function(respose){
+            console.log(respose)
+            that.findReply = respose.data
+            console.log("123");
+          }
+        })
       }
     },
     created: function () {
 
-
+     this.articleId = this.$route.query.articleId;
+      this.article();
+      this.findReplyA();
     }
 
   }

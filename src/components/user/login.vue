@@ -60,7 +60,7 @@
         this.$refs[formName].validate((valid) => {
           if (valid) {
             $.ajax({
-              url:'http://localhost:8080/user/login',
+              url:that.devUrl+'user/login',
               type:'POST', //GET
               xhrFields: {withCredentials: true},
               crossDomain:true,
@@ -77,7 +77,7 @@
                   that.$cookie.set("name",res.data.name);
                   that.$cookie.set("userId",res.data.userId);
                   //登陆后展示头像和另外一个模块
-                $('#loginName').html("<a href='#/user/Detail'><img src="+res.data.photo+" class='layui-nav-img'>"+res.data.name+"</a>");
+                $('#loginName').html("<a href='#/user/userHome'><img src="+res.data.photo+" class='layui-nav-img'>"+res.data.name+"</a>");
                 $('#quit').show();
                 that.$message({
                   showClose: true,

@@ -37,13 +37,13 @@ export default {
   },
   mounted:function(){
     //this.$login();
-    //this.$checkLogin();
+    this.$checkLogin();
   },
   methods:{
     quit () {
       var that = this;
       $.ajax({
-        url:'http://localhost:8080/user/quit',
+        url:that.devUrl+'user/quit',
         type:'GET', //GET
         xhrFields: {withCredentials: true},
         crossDomain:true,

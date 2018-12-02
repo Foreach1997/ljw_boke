@@ -13,13 +13,10 @@ import Report from '../components/user/report'
 import userHome from '../components/user/userHome'
 import MyCard from '../components/user/card/myCard'
 import MyInfo from '../components/user/card/myInfo'
-import MyInfoA from '../components/user/card/myInfoA'
 
 Vue.use(Router)
 
 export default new Router({
-  /* mode: 'history',
-  base: '/ljw_boke/', */
   routes: [
     {
       path: '/home',
@@ -43,6 +40,7 @@ export default new Router({
     },
     {
       path: '/com',
+      name: 'Com',
       component: Com
     },
     {
@@ -70,11 +68,7 @@ export default new Router({
       },
       {
         path: '/user/card/myInfo',
-        component: MyInfo,
-        children: [{
-          path: '/user/card/myInfoA',
-          component: MyInfoA
-        }]
+        component: MyInfo
       }
       ]
     }

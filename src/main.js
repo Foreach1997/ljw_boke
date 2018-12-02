@@ -9,32 +9,28 @@ import axios from 'axios'
 import cookie from 'vue-js-cookie'
 Vue.config.productionTip = false
 
-Vue.prototype.$login = function () {
-  const IsFlag = this.$cookie.get('IsFlag')
-  console.log(this.$cookie.get('userId'))
-  console.log(this.$cookie.get('JSESSIONID'))
-  console.log(IsFlag)
-  if (IsFlag == 'true') {
-    console.log('312312312')
-    $('#loginName').html("<a href='#/user/Detail'><img src=" + this.$cookie.get('photo') + " class='layui-nav-img'>" + this.$cookie.get('name') + '</a>')
-    $('#quit').show()
-  } else {
-    $('#loginName').html("<a href='#/user/login'><i class='layui-icon'>&#xe66f;</i><span>&nbsp;登录</span></a>")
-  }
-}
+
+
+Vue.prototype.devUrl = 'http://localhost:8080/';
+//Vue.prototype.devUrl = 'http://47.107.55.207:8080/';
+
 Vue.prototype.$checkLogin = function () {
-  var flag = true
+  var flag = true;
+  var that = this;
   $.ajax({
-    url: 'http://localhost:8080/user/checkLogin',
+    url: that.devUrl+'user/checkLogin',
     type: 'GET',
     async: false,
+    xhrFields: {withCredentials: true},
+    crossDomain:true,
     success: function (res) {
-      flag = false
       if (res.code == 200) {
-        $('#loginName').html("<a href='#/user/login'><i class='layui-icon'>&#xe66f;</i><span>&nbsp;登录</span></a>")
-        $('#quit').hide()
+        $('#loginName').html("<a href='#/user/login'><i class='layui-icon'>&#xe66f;</i><span>&nbsp;登录</span></a>");
+        flag = false;
+        $('#quit').hide();
       } else {
-        $('#loginName').html("<a href='#/user/login'><i class='layui-icon'>&#xe66f;</i><span>&nbsp;登录</span></a>")
+        $('#loginName').html("<a href='#/user/userHome'><img src="+that.$cookie.get('photo')+" class='layui-nav-img'>"+that.$cookie.get('name')+"</a>");
+        $('#quit').show();
       }
     }
   })

@@ -129,7 +129,7 @@
         this.$refs[formName].validate((valid) => {
           if (valid) {
             $.ajax({
-              url:'http://localhost:8080/user/reg',
+              url:that.devUrl+'user/reg',
               type:'POST', //GET
               //sasync:false,    //或false,是否异步
               data:{

@@ -47,25 +47,89 @@
            value: '讨论',
            label: '讨论'
          }],
-         type: ''
+         type: '',
+         content:''
        }
      },
       mounted:function () {
-
-      this.edit();
-     // this.$checkLogin();
-      console.log(this.$checkLogin())
+        this.edit();
+        const checkLogin = this.$checkLogin();
+        console.log("report  "+checkLogin)
+          if (!checkLogin){
+            this.$router.replace('/user/login');
+            this.$message({
+              showClose: true,
+              message: '请先登录',
+              customClass: 'article',
+              type: 'warning'
+            });
+          }
       },
       methods:{
         edit () {
+          const  that = this;
           layui.use('layedit',function () {
             var layedit = layui.layedit;
+            layedit.set({
+              uploadImage: {
+                url: that.devUrl+'article/uploadPhoto' //接口url
+                ,type: '' //默认post
+              }
+            });
             var index = layedit.build('edit', {
               height: 180 //设置编辑器高度
             });
             $('#editSumbit').on('click',function () {
               var content =  layedit.getContent(index);
-              console.log(content)
+              that.content= content;
+              console.log(content);
+              if (that.title==''){
+                that.$message({
+                  showClose: true,
+                  message: '请填写标题',
+                  customClass: 'article',
+                  type: 'warning'
+                });
+              }
+              if (that.type==''){
+                that.$message({
+                  showClose: true,
+                  message: '请填写类型',
+                  customClass: 'article',
+                  type: 'warning'
+                });
+              }
+              if (that.content==''){
+                that.$message({
+                  showClose: true,
+                  message: '请填写内容',
+                  customClass: 'article',
+                  type: 'warning'
+                });
+              }else {
+              $.ajax({
+                url:that.devUrl+'article/report',
+                type:'post',
+                data:{
+                  articleTitle: that.title,
+                  articleType: that.type,
+                  article: that.content,
+                  userId: that.$cookie.get('userId'),
+                  photo:that.$cookie.get('photo')
+                },
+                success:function (res) {
+                  if (res.code == 200) {
+                    that.$router.replace('/community');
+                    that.$message({
+                      showClose: true,
+                      message: '发表成功',
+                      customClass: 'article',
+                      type: 'success'
+                    });
+                    }
+                  }
+                });
+              }
             })
           })
         },
@@ -75,6 +139,10 @@
 
 <style>
 
+.article{
+  position: absolute;
+  top: 20%;
+}
 
 
 </style>
