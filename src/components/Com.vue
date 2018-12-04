@@ -9,7 +9,7 @@
         <!-- 帖子主体部分-->
 
         <div class="fly-panel detail-box">
-        <div class="detail-body photos detail-box" v-html="context">
+        <div class="detail-body photos detail-box" id="ph" v-html="context">
         <!--  <p>
             该模版由 layui官方社区（<a href="http://fly.layui.com/" target="_blank">fly.layui.com</a>）倾情提供，只为表明我们对 layui 执着的信念、以及对未来持续加强的承诺。该模版基于 layui 搭建而成，可作为极简通用型社区的页面支撑。
           </p>
@@ -281,6 +281,8 @@
       this.edit();
      // this.page();
       //this.findReplyA();
+      $("#ph img").css("cursor","pointer");
+      this.photo();
     },
     methods:{
 
@@ -475,6 +477,14 @@
             console.log("123");
           }
         })
+      },
+      photo () {
+        layer.ready(function(){ //为了layer.ext.js加载完毕再执行
+          layer.photos({
+            photos: '#ph'
+            //0-6的选择，指定弹出图片动画类型，默认随机
+          });
+        });
       }
     },
     created: function () {
