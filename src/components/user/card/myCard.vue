@@ -1,21 +1,22 @@
 <template>
+  <div>
+    <div style="width:1000px;margin-left:100px;padding-top: 50px">
   <el-table
     :data="tableData"
-    style="width: 100%">
+    >
     <el-table-column
       label="日期"
-      width="180"
-      prop="date">
+      prop="createTime">
     </el-table-column>
     <el-table-column
       label="标题"
-      width="180">
+     >
       <template slot-scope="scope">
         <el-button
           @click.native.prevent="deleteRow(scope.$index, scope.row)"
           type="text"
           size="small">
-         {{scope.row.name}}
+         {{scope.row.articleTitle}}
         </el-button>
       </template>
     </el-table-column>
@@ -31,30 +32,29 @@
       </template>
     </el-table-column>
   </el-table>
+    </div>
+  <div class="block" style="text-align: center" id="communicationPage">
+    <el-pagination @current-change="findUserArticleTitle"
+                   @prev-click="findUserArticleTitle"
+                   :page-size= 5
+                   @next-click="findUserArticleTitle"
+                   layout="prev, pager, next"
+                   :total="count">
+    </el-pagination>
+  </div>
+  </div>
 </template>
 
 <script>
   export default {
     data() {
       return {
-        tableData: [{
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-04',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1517 弄'
-        }, {
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1519 弄'
-        }, {
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄'
-        }]
+        tableData: [],
+        count:0
       }
+    },
+    mounted:function(){
+     this.findUserArticleTitle();
     },
     methods: {
       handleEdit(index, row) {
@@ -65,11 +65,31 @@
       },
       deleteRow (index, row) {
         console.log(index, row);
+      },
+      findUserArticleTitle () {
+        const that = this;
+        const userId = this.$cookie.get("userId");
+        $.ajax({
+          url:that.devUrl+'ArticleTitle/userArticleTitle',
+          type:'GET', //GET
+          async:false,    //或false,是否异步
+          data:{
+            userId:userId
+          },
+          success:function(respose){
+            console.log("findHostArticleTitle: "+respose.data)
+            that.tableData= respose.data;
+            console.log(that.tableData)
+          }
+        })
       }
     }
   }
 </script>
 
 <style scoped>
-
+  #info{
+    margin-top:2% ;
+    margin-left: 25%;
+  }
 </style>

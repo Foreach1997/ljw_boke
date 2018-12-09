@@ -11,8 +11,8 @@ Vue.config.productionTip = false
 
 
 
-//Vue.prototype.devUrl = 'http://localhost:8080/';
-Vue.prototype.devUrl = 'http://47.107.55.207:8080/';
+Vue.prototype.devUrl = 'http://localhost:8080/';
+//Vue.prototype.devUrl = 'http://47.107.55.207:8080/';
 
 Vue.prototype.$checkLogin = function () {
   var flag = true;

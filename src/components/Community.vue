@@ -102,17 +102,21 @@
       </div>
       <div class="layui-col-md4">
 
-        <div class="fly-panel">
-          <h3 class="fly-panel-title">相关连接</h3>
-          <ul class="fly-panel-main fly-list-static">
-            <li v-for="(item,index) in connectData">
-              <a :href="item.connect" target="_blank" >{{item.note}}</a>
-            </li>
-          </ul>
-        </div>
+        <dl class="fly-panel fly-list-one">
+          <dt class="fly-panel-title">热议</dt>
+          <dd v-for="(item,index) in hostArticleTitle">
+            <router-link :to="{name:'Com',query:{articleId:item.articleId}}">{{item.articleTitle}}</router-link>
+            <span><i class="iconfont icon-pinglun1"></i>{{item.replyCount}}</span>
+          </dd>
+          <!-- 无数据时 -->
+          <!--
+          <div class="fly-none">没有相关数据</div>
+          -->
+        </dl>
 
 
         <div class="fly-panel">
+          <dt class="fly-panel-title">留言</dt>
           <div class="fly-panel-title">
             <el-button type="primary" @click="show = !show" icon="el-icon-edit">你想说什么?</el-button>
           </div>
@@ -126,21 +130,24 @@
                     placeholder="留下一点足迹吧?"
                     v-model="textarea">
                   </el-input>
-                  <el-button type="success" style="margin-bottom:3px; margin-top:10px;margin-left:250px;width: 100px;height: 30px;float: right">发送</el-button>
+                  <el-button type="success" @click="saveCommunication" style="margin-bottom:3px; margin-top:10px;margin-left:250px;width: 100px;height: 30px;float: right">发送</el-button>
                   <hr />
                 </div>
               </transition>
             </div>
             <ul>
-              <li>
-                <h3>123dasda</h3>
-                <span class="fly-list-info">小罗</span>
-                <span class="fly-list-info">2018-09-10</span>
+              <li v-for="(item,index) in communication">
+                <h3>{{item.text}}</h3>
+                <span class="fly-list-info">{{item.name}}</span>
+                <span class="fly-list-info">{{item.createTime}}</span>
                 <hr/>
               </li>
             </ul>
             <div class="block" style="text-align: center" id="communicationPage">
-              <el-pagination
+              <el-pagination @current-change="findCommunication"
+                @prev-click="findCommunication"
+                :page-size= 5
+                @next-click="findCommunication"
                 layout="prev, pager, next"
                 :total="communicationCount">
               </el-pagination>
@@ -157,26 +164,25 @@
           <h3 class="fly-panel-title">来访记录</h3>
           <dl>
             <!--<i class="layui-icon fly-loading">&#xe63d;</i>-->
-            <dd>
+            <dd v-for="(item,index) in visitor">
               <a href="user/home.html">
                 <img
-                  src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"><cite>贤心</cite><i>来访106次</i>
+                  :src="item.photo"><cite>{{item.name}}</cite>
               </a>
+              <i style="font-size: 10px">{{item.loginTime}}</i>
             </dd>
           </dl>
         </div>
 
-        <dl class="fly-panel fly-list-one">
-          <dt class="fly-panel-title">热议</dt>
-          <dd>
-            <a href="jie/detail.html">基于 layui 的极简社区页面模版</a>
-            <span><i class="iconfont icon-pinglun1"></i> 16</span>
-          </dd>
-          <!-- 无数据时 -->
-          <!--
-          <div class="fly-none">没有相关数据</div>
-          -->
-        </dl>
+
+        <div class="fly-panel">
+          <h3 class="fly-panel-title">相关连接</h3>
+          <ul class="fly-panel-main fly-list-static">
+            <li v-for="(item,index) in connectData">
+              <a :href="item.connect" target="_blank" >{{item.note}}</a>
+            </li>
+          </ul>
+        </div>
 
         <!--<div class="fly-panel">
           <div class="fly-panel-title">
@@ -205,12 +211,19 @@
         connectData:[],
         show:false,
         textarea:'',
-        communicationCount:40
+        communicationCount:0,
+        communication:'',
+        communicationPage:'',
+        visitor:[],
+        hostArticleTitle:[]
       }
     },
     mounted:function() {
       $('#ww').addClass('layui-this')
       this.page();
+      this.findCommunication();
+      this.findVisitor();
+      this.findHostArticleTitle();
     },
     methods:{
       type (event) {
@@ -268,11 +281,99 @@
           type:'GET', //GET
           async:false,    //或false,是否异步
           data:{
-
+            currentPage: that.currentPage,
           },
           success:function(respose){
             console.log(respose)
             that.connectData = respose.data
+          }
+        })
+      },
+      saveCommunication () {
+        var that = this;
+        const  flag = this.$checkLogin();
+        if (!flag){
+          that.$router.replace('/user/login');
+          that.$message({
+            showClose: true,
+            message: '请先登录',
+            customClass: 'article',
+            type: 'warning'
+          });
+        }else if (this.textarea!=''){
+        $.ajax({
+          url:that.devUrl+'communication/saveCommunication',
+          type:'post', //GET
+          async:false,    //或false,是否异步
+          data:{
+            userId:that.$cookie.get("userId"),
+            name:that.$cookie.get("name"),
+            text:that.textarea
+          },
+          success:function(respose){
+            console.log(respose)
+            if (respose.code==200){
+              that.textarea = '';
+              layui.use('layer',function () {
+                const layer = layui.layer;
+                layer.msg('留言成功');
+              })
+            }
+          }
+        })
+       }else {
+          layui.use('layer',function () {
+            const layer = layui.layer;
+            layer.msg('请填写内容');
+          })
+        }
+      },
+      findCommunication (obj) {
+        console.log("findCommunication:"+obj)
+        const that = this;
+        $.ajax({
+          url:that.devUrl+'communication/findAllCommunication',
+          type:'GET', //GET
+          async:false,    //或false,是否异步
+          data:{
+            //currentPage:that.communicationPage
+            currentPage:obj
+          },
+          success:function(respose){
+            console.log(respose)
+            that.communication = respose.data;
+            that.communicationCount = respose.count;
+          }
+        })
+      },
+      findVisitor () {
+        const that = this;
+        $.ajax({
+          url:that.devUrl+'user/visitor',
+          type:'GET', //GET
+          async:false,    //或false,是否异步
+          data:{
+
+          },
+          success:function(respose){
+            console.log(respose)
+            that.visitor= respose.data;
+          }
+        })
+      },
+      findHostArticleTitle () {
+        const that = this;
+        $.ajax({
+          url:that.devUrl+'ArticleTitle/findHostArticleTitle',
+          type:'GET', //GET
+          async:false,    //或false,是否异步
+          data:{
+
+          },
+          success:function(respose){
+            console.log("findHostArticleTitle: "+respose.data)
+            that.hostArticleTitle= respose.data;
+            console.log(that.hostArticleTitle)
           }
         })
       }

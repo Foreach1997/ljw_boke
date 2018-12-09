@@ -1,6 +1,6 @@
 <template>
   <div id="info">
-    <el-upload style="padding-left: 100px"
+ <!--   <el-upload style="padding-left: 100px"
     class="avatar-uploader"
     action="https://jsonplaceholder.typicode.com/posts/"
     :show-file-list="false"
@@ -8,8 +8,15 @@
     :before-upload="beforeAvatarUpload">
     <img v-if="imageUrl" :src="imageUrl" class="avatar">
     <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-  </el-upload>
-  <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="100px" class="demo-ruleForm">
+  </el-upload>-->
+    <div style="padding-left: 140px" class="layui-upload">
+      <button type="button" class="layui-btn" id="test1">上传图片</button>
+      <div class="layui-upload-list">
+        <img style="width: 90px;height: 90px" class="layui-upload-img" id="demo1">
+        <p id="demoText"></p>
+      </div>
+    </div>
+    <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="100px" class="demo-ruleForm">
   <el-form-item label="名字" prop="name">
   <el-input type="input" placeholder="登录后的名字" style="width: 250px" v-model="ruleForm2.name" autocomplete="off"></el-input>
   </el-form-item>
@@ -20,7 +27,7 @@
     <el-input type="password" style="width: 250px" v-model="ruleForm2.userPasswordA" autocomplete="off"></el-input>
   </el-form-item>
   <el-form-item>
-      <el-button type="primary" @click="submitForm('ruleForm2')">确认修改</el-button>
+      <el-button type="primary" id="sub" @click="submitForm('ruleForm2')">确认修改</el-button>
   </el-form-item>
   </el-form>
   </div>
@@ -101,13 +108,51 @@
         var that = this;
         this.$refs[formName].validate((valid) => {
           if (valid) {
-
+              alert("123")
           } else {
             console.log('error submit!!');
             return false;
           }
         });
       }
+    },
+    mounted:function () {
+      layui.use('upload', function(){
+        var $ = layui.jquery
+          ,upload = layui.upload;
+
+        //普通图片上传
+        var uploadInst = upload.render({
+          elem: '#test1',
+          url: '/upload/',
+          auto:false,
+          bindAction:'#sub',
+          choose: function(obj){
+            obj.preview(function(index, file, result){
+              $('#demo1').attr('src', result); //图片链接（base64）
+            });
+          },
+          before: function(obj){
+            //预读本地文件示例，不支持ie8
+            /*obj.preview(function(index, file, result){
+              $('#demo1').attr('src', result); //图片链接（base64）
+            });*/
+          }
+          ,done: function(res){
+            //如果上传失败
+            if(res.code > 0){
+              return layer.msg('上传失败');
+            }
+            //上传成功
+          }
+          ,error: function(){
+            //演示失败状态，并实现重传
+            var demoText = $('#demoText');
+            demoText.html('<span style="color: #FF5722;">上传失败</span>');
+
+          }
+        });
+      })
     }
   }
 </script>
@@ -137,7 +182,7 @@
     display: block;
   }
   #info{
-    margin-top:8% ;
+    margin-top:2% ;
     margin-left: 25%;
   }
 </style>
