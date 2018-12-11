@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div style="width:1000px;margin-left:100px;padding-top: 50px">
+  <div id="info">
+    <div style="width:1000px;padding-top: 50px">
   <el-table
     :data="tableData"
     >
@@ -92,7 +92,6 @@
 
 <style scoped>
   #info{
-    margin-top:2% ;
-    margin-left: 25%;
+    margin-left: 3%;
   }
 </style>
