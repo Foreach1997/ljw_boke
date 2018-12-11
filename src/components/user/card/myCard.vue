@@ -12,12 +12,13 @@
       label="标题"
      >
       <template slot-scope="scope">
-        <el-button
-          @click.native.prevent="deleteRow(scope.$index, scope.row)"
+       <!-- <el-button
+          @click.native.prevent="comRow(scope.$index, scope.row)"
           type="text"
           size="small">
          {{scope.row.articleTitle}}
-        </el-button>
+        </el-button>-->
+        <router-link style="color: #01AAED" :to="{name:'Com',query:{articleId:scope.row.articleId}}">{{scope.row.articleTitle}}</router-link>
       </template>
     </el-table-column>
     <el-table-column label="操作">
@@ -63,8 +64,9 @@
       handleDelete(index, row) {
         console.log(index, row);
       },
-      deleteRow (index, row) {
+      comRow (index, row) {
         console.log(index, row);
+
       },
       findUserArticleTitle () {
         const that = this;
@@ -79,6 +81,7 @@
           success:function(respose){
             console.log("findHostArticleTitle: "+respose.data)
             that.tableData= respose.data;
+            that.count = respose.count;
             console.log(that.tableData)
           }
         })
