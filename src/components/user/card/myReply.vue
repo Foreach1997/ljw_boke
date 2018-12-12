@@ -2,7 +2,7 @@
   <div class="layui-container">
     <div class="layui-row layui-col-space15">
       <div class="layui-col-md6 fly-home-jie">
-          <h3 class="fly-panel-title">贤心 最近的提问</h3>
+          <h3 class="fly-panel-title">最近收到的回复</h3>
           <ul class="jie-row">
             <li>
               <span class="fly-jing">精</span>
@@ -45,7 +45,7 @@
       </div>
 
       <div class="layui-col-md6 fly-home-da">
-          <h3 class="fly-panel-title">贤心 最近的回答</h3>
+          <h3 class="fly-panel-title">最近的回答</h3>
           <ul class="home-jieda">
             <li>
               <p>
