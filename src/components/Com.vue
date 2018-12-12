@@ -359,7 +359,8 @@
                   name:nameA,
                   userId:userId,
                   replyId:replyId,
-                  coverName:name
+                  coverName:name,
+                  articleId:that.articleId
                 },
                 success:function(respose){
                   console.log(respose);

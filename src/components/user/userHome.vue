@@ -7,7 +7,7 @@
           <template slot="title"><i class="el-icon-menu"></i>帖子管理</template>
           <el-menu-item-group>
             <el-menu-item index="/user/card/myCard">我的帖子</el-menu-item>
-            <el-menu-item index="2-2">我的回复</el-menu-item>
+            <el-menu-item index="/user/card/myReply">我的回复</el-menu-item>
             <el-menu-item index="2-3">帖子回复</el-menu-item>
           </el-menu-item-group>
         </el-submenu>

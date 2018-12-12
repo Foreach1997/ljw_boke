@@ -13,6 +13,7 @@ import Report from '../components/user/report'
 import userHome from '../components/user/userHome'
 import MyCard from '../components/user/card/myCard'
 import MyInfo from '../components/user/card/myInfo'
+import MyReply from '../components/user/card/myReply'
 
 Vue.use(Router)
 
@@ -69,6 +70,10 @@ export default new Router({
       {
         path: '/user/card/myInfo',
         component: MyInfo
+      },
+      {
+        path: '/user/card/myReply',
+        component: MyReply
       }
       ]
     }
