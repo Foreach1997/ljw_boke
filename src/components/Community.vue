@@ -5,24 +5,27 @@
         <div class="fly-panel">
           <div class="fly-panel-title fly-filter">
             <a>置顶</a>
-            <router-link to="user/report">发表</router-link>
+            <button style="float: right;margin-top: 6px" class="layui-btn layui-btn-normal"><router-link to="user/report">发贴</router-link></button>
             <!-- <a href="#signin" class="layui-hide-sm layui-show-xs-block fly-right" id="LAY_goSignin" style="color: #FF5722;">去签到</a>-->
           </div>
           <ul class="fly-list">
             <li v-for="(item, index) in ArticleTitle">
-              <a href="user/home.html" class="fly-avatar">
-               <!-- <img :src="item.photo" alt="贤心">-->
-                <img :src="item.photo" alt="贤心">
-              </a>
+                <router-link :to="{name:'MyHome',query:{userId:item.userId}}" target="_blank" class="fly-avatar">
+                 <img :src="item.photo">
+                </router-link>
+                <!-- <img :src="item.photo" alt="贤心">-->
               <h2>
                 <a class="layui-badge">{{item.articleType}}</a>
                <!-- <a href="jie/detail.html">{{item.articleTitle}}</a>-->
                 <router-link :to="{name:'Com',query:{articleId:item.articleId}}">{{item.articleTitle}}</router-link>
               </h2>
               <div class="fly-list-info">
-                <a href="user/home.html" link>
+             <!--   <a href="user/home.html" link>
                   <cite>{{item.name}}</cite>
-                </a>
+                </a>-->
+                <router-link :to="{name:'MyHome',query:{userId:item.userId}}" target="_blank">
+                  <cite>{{item.name}}</cite>
+                </router-link>
                 <span>{{item.createTime}}</span>
 
                 <!--
@@ -63,25 +66,30 @@
 
           <ul class="fly-list">
             <li v-for="(item,index) in ArticleTitles">
-              <a href="user/home.html" class="fly-avatar">
-                <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg" alt="贤心">
-              </a>
+             <!-- <a href="user/home.html" class="fly-avatar">
+                <img :src="item.photo" alt="贤心">
+              </a>-->
+              <router-link :to="{name:'MyHome',query:{userId:item.userId}}" target="_blank" class="fly-avatar">
+                <img :src="item.photo">
+              </router-link>
               <h2>
                 <a class="layui-badge">{{item.articleType}}</a>
                <!-- <a href="jie/detail.html">{{item.articleTitle}}</a>-->
                 <router-link :to="{name:'Com',query:{articleId:item.articleId}}">{{item.articleTitle}}</router-link>
               </h2>
               <div class="fly-list-info">
-                <a href="user/home.html" link>
-                  <cite>{{item.name}}</cite>
+                  <router-link :to="{name:'MyHome',query:{userId:item.userId}}" target="_blank" link>
+                    <cite>{{item.name}}</cite>
+                  </router-link>
                   <!--
                   <i class="iconfont icon-renzheng" title="认证信息：XXX"></i>
                   <i class="layui-badge fly-badge-vip">VIP3</i>
                   -->
-                </a>
                 <span>{{item.createTime}}</span>
 
+<!--
                 <span class="fly-list-kiss layui-hide-xs" title="浏览量"><i class="layui-icon">&#xe67a;</i>{{item.browseCount}}</span>
+-->
                 <!--<span class="layui-badge fly-badge-accept layui-hide-xs">已结</span>-->
                 <span class="fly-list-nums">
                 <i class="iconfont icon-pinglun1" title="回答"></i>{{item.replyCount}}
@@ -165,10 +173,14 @@
           <dl>
             <!--<i class="layui-icon fly-loading">&#xe63d;</i>-->
             <dd v-for="(item,index) in visitor">
-              <a href="user/home.html">
+             <!-- <a href="user/home.html">
                 <img
                   :src="item.photo"><cite>{{item.name}}</cite>
-              </a>
+              </a>-->
+              <router-link :to="{name:'MyHome',query:{userId:item.userId}}" target="_blank">
+                <img
+                  :src="item.photo"><cite>{{item.name}}</cite>
+              </router-link>
               <i style="font-size: 10px">{{item.loginTime}}</i>
             </dd>
           </dl>
@@ -305,6 +317,8 @@
           url:that.devUrl+'communication/saveCommunication',
           type:'post', //GET
           async:false,    //或false,是否异步
+          xhrFields: {withCredentials: true},
+          crossDomain:true,
           data:{
             userId:that.$cookie.get("userId"),
             name:that.$cookie.get("name"),
@@ -317,6 +331,7 @@
               layui.use('layer',function () {
                 const layer = layui.layer;
                 layer.msg('留言成功');
+                that.findCommunication();
               })
             }
           }

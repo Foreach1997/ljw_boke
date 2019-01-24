@@ -23,9 +23,9 @@
     </el-table-column>
     <el-table-column label="操作">
       <template slot-scope="scope">
-        <el-button
+       <!-- <el-button
           size="mini"
-          @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+          @click="handleEdit(scope.$index, scope.row)">编辑</el-button>-->
         <el-button
           size="mini"
           type="danger"
@@ -63,6 +63,25 @@
       },
       handleDelete(index, row) {
         console.log(index, row);
+        const that = this;
+        layer.confirm('你确定删除吗？', {
+          btn: ['确定','取消'] //按钮
+        }, function(){
+          $.ajax({
+            url:that.devUrl+'ArticleTitle/delUserArticleTitle',
+            type:'POST', //GET
+            async:false,    //或false,是否异步
+            xhrFields: {withCredentials: true},
+            crossDomain:true,
+            data:{
+              articleId:row.articleId
+            },
+            success:function(respose){
+              layer.msg('删除成功', {icon: 1});
+              that.findUserArticleTitle();
+            }
+          })
+        })
       },
       comRow (index, row) {
         console.log(index, row);

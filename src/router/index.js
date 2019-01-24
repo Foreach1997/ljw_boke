@@ -6,6 +6,7 @@ import Journal from '../components/Journal'
 import Author from '../components/Author'
 import Community from '../components/Community'
 import Com from '../components/Com'
+import MyHome from '../components/MyHome'
 import Login from '../components/user/login'
 import Reg from '../components/user/reg'
 import Detail from '../components/user/detail'
@@ -14,6 +15,7 @@ import userHome from '../components/user/userHome'
 import MyCard from '../components/user/card/myCard'
 import MyInfo from '../components/user/card/myInfo'
 import MyReply from '../components/user/card/myReply'
+import MyDynamic from '../components/user/card/myDynamic'
 
 Vue.use(Router)
 
@@ -53,7 +55,13 @@ export default new Router({
       component: Reg
     },
     {
+      path: '/MyHome',
+      name:'MyHome',
+      component: MyHome
+    },
+    {
       path: '/user/detail',
+      name: 'Detail',
       component: Detail
     },
     {
@@ -74,6 +82,14 @@ export default new Router({
       {
         path: '/user/card/myReply',
         component: MyReply
+      },
+      {
+        path: '/user/card/MyDynamic',
+        component: MyDynamic
+      },
+      {
+        path:'',
+        redirect: '/user/card/myCard'
       }
       ]
     }

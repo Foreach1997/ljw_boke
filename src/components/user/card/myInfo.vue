@@ -108,7 +108,7 @@
         var that = this;
         this.$refs[formName].validate((valid) => {
           if (valid) {
-              alert("123")
+
           } else {
             console.log('error submit!!');
             return false;
@@ -117,6 +117,7 @@
       }
     },
     mounted:function () {
+      const that = this;
       layui.use('upload', function(){
         var $ = layui.jquery
           ,upload = layui.upload;
@@ -124,15 +125,22 @@
         //普通图片上传
         var uploadInst = upload.render({
           elem: '#test1',
-          url: '/upload/',
+          url:that.devUrl + 'user/updatePhoto',
           auto:false,
           bindAction:'#sub',
+          data:{
+          },
           choose: function(obj){
             obj.preview(function(index, file, result){
               $('#demo1').attr('src', result); //图片链接（base64）
             });
           },
           before: function(obj){
+            this.data = {
+              userId:that.$cookie.get('userId'),
+              name:that.ruleForm2.name,
+              password:that.ruleForm2.userPasswordA,
+              userPassword:that.ruleForm2.userPasswordA}
             //预读本地文件示例，不支持ie8
             /*obj.preview(function(index, file, result){
               $('#demo1').attr('src', result); //图片链接（base64）
@@ -140,8 +148,14 @@
           }
           ,done: function(res){
             //如果上传失败
-            if(res.code > 0){
-              return layer.msg('上传失败');
+            if(res.code == 250){
+              return layer.msg('请勿输入与上次一样的密码');
+            }else if (res.code == 300){
+              return layer.msg('失败');
+            } else {
+              that.$cookie.set("name",res.data.name);
+              that.$cookie.set("photo",res.data.photo);
+              return layer.msg('成功');
             }
             //上传成功
           }

@@ -146,6 +146,12 @@
                       type: 'success'
                     });
                     that.$router.replace("/user/login");
+                  }else if (res.code == 210){
+                    that.$message({
+                      showClose: true,
+                      message: res.msg,
+                      type: 'success'
+                    });
                   }
               }
             });

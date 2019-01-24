@@ -41,13 +41,19 @@
             <li data-id="111" class="jieda-daan" v-for="(item,index) in findReply">
               <a name="item-1111111111"></a>
               <div class="detail-about detail-about-reply">
-                <a class="fly-avatar" href="">
+               <!-- <a class="fly-avatar" href="">
                   <img :src="item.photo" alt=" ">
-                </a>
+                </a>-->
+                <router-link :to="{name:'MyHome',query:{userId:item.userId}}" target="_blank" class="fly-avatar">
+                 <img :src="item.photo" alt=" ">
+                </router-link>
                 <div class="fly-detail-user">
-                  <a href="" class="fly-link">
+             <!--     <a href="" class="fly-link">
                     <cite>{{item.name}}</cite>
-                  </a>
+                  </a>-->
+                  <router-link :to="{name:'MyHome',query:{userId:item.userId}}" target="_blank" class="fly-link">
+                    <cite>{{item.name}}</cite>
+                  </router-link>
                   <span v-if="item.userId == userId">(楼主)</span>
                 </div>
 
@@ -69,14 +75,25 @@
                   <li data-id="111" class="jieda-daan" v-for="(it,i) in item.replyUserEntity">
                     <a name="item-1111111111"></a>
                     <div class="detail-about detail-about-reply">
-                      <a class="fly-avatar" href="">
+                     <!-- <a class="fly-avatar" href="">
                         <img style="width: 30px;height: 30px"  :src="it.photo" alt=" ">
-                      </a>
+                      </a>-->
+                      <router-link :to="{name:'MyHome',query:{userId:it.userId}}" target="_blank" class="fly-avatar">
+                        <img style="width: 30px;height: 30px"  :src="it.photo" alt=" ">
+                      </router-link>
                       <div class="fly-detail-user">
-                        <a href="" class="fly-link">
+                        <!--<a href="" class="fly-link">
                           <cite>{{it.name}}</cite>
-                        </a>
+                        </a>-->
+                        <router-link :to="{name:'MyHome',query:{userId:it.userId}}" target="_blank" class="fly-link">
+                          <cite>{{it.name}}</cite>
+                        </router-link>
                         <span v-if="it.userId == userId">(楼主)</span>
+                        <span>回复:</span>
+                        <router-link :to="{name:'MyHome',query:{userId:it.coverUserId}}" target="_blank" class="fly-link">
+                          <cite>{{it.coverName}}</cite>
+                        </router-link>
+                        <span v-if="it.coverUserId == userId">(楼主)</span>
                         <span>{{it.createTime}}</span>
                       </div>
                     </div>
@@ -230,10 +247,14 @@
           <dl>
             <!--<i class="layui-icon fly-loading">&#xe63d;</i>-->
             <dd v-for="(item,index) in visitor">
-              <a href="user/home.html">
+            <!--  <a href="user/home.html">
                 <img
                   :src="item.photo"><cite>{{item.name}}</cite>
-              </a>
+              </a>-->
+              <router-link :to="{name:'MyHome',query:{userId:item.userId}}" target="_blank">
+                <img
+                  :src="item.photo"><cite>{{item.name}}</cite>
+              </router-link>
               <i style="font-size: 10px">{{item.loginTime}}</i>
             </dd>
           </dl>
@@ -315,7 +336,7 @@
             title: '回复',
             skin: 'layui-layer-rim', //加上边框
             area: ['820px', '350px'], //宽高
-            content: '<textarea class="layui-textarea" id="rep" style="display: none">'+'@'+name+':</textarea>' +
+            content: '<textarea class="layui-textarea" id="rep" style="display: none">'+'</textarea>' +
               '<button class="layui-btn" id="repsumbit" style="margin-top: 20px;margin-left: 600px" lay-filter="*" lay-submit>提交回复</button>'
           })
 
@@ -352,6 +373,8 @@
                 url:that.devUrl+'replyUser/saveReplyUser',
                 type:'POST', //GET
                 async:false,    //或false,是否异步
+                xhrFields: {withCredentials: true},
+                crossDomain:true,
                 data:{
                   coverUserId:coverUserId,
                   note:content,
@@ -422,6 +445,8 @@
                 url:that.devUrl+'reply/saveReply',
                 type:'POST', //GET
                 async:false,    //或false,是否异步
+                xhrFields: {withCredentials: true},
+                crossDomain:true,
                 data:{
                   text:content,
                   photo:photo,
@@ -518,6 +543,8 @@
             url:that.devUrl+'communication/saveCommunication',
             type:'post', //GET
             async:false,    //或false,是否异步
+            xhrFields: {withCredentials: true},
+            crossDomain:true,
             data:{
               userId:that.$cookie.get("userId"),
               name:that.$cookie.get("name"),
@@ -530,6 +557,7 @@
                 layui.use('layer',function () {
                   const  layer = layui.layer;
                   layer.msg('留言成功');
+                  that.findCommunication();
                 })
               }
             }

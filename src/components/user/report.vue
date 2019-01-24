@@ -91,7 +91,7 @@
                   type: 'warning'
                 });
               }
-              if (that.type==''){
+              else if (that.type==''){
                 that.$message({
                   showClose: true,
                   message: '请填写类型',
@@ -99,7 +99,7 @@
                   type: 'warning'
                 });
               }
-              if (that.content==''){
+              else if (that.content==''){
                 that.$message({
                   showClose: true,
                   message: '请填写内容',
@@ -110,6 +110,8 @@
               $.ajax({
                 url:that.devUrl+'article/report',
                 type:'post',
+                xhrFields: {withCredentials: true},
+                crossDomain:true,
                 data:{
                   articleTitle: that.title,
                   articleType: that.type,
@@ -132,8 +134,8 @@
               }
             })
           })
-        },
-      },
+        }
+      }
     }
 </script>
 

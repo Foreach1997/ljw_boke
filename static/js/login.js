@@ -20,3 +20,6 @@
   }
   window.MyLogin = MyLogin;
 })()*/
+$(function() {
+  alert("123");
+})
