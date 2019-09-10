@@ -97,8 +97,8 @@
                     crossDomain:true,
                     data:{
                       userArticleTitle: that.title,
-                      userArticleNote:that.content,
-                      userArticleText: that.userArticleText,
+                      userArticleNote:that.userArticleText,
+                      userArticleText: that.content,
                       userId: that.$cookie.get('userId'),
                     },
                     success:function (res) {

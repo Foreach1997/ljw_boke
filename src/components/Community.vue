@@ -290,6 +290,8 @@
         var that = this;
         $.ajax({
           url:that.devUrl+'connect/connectDesc',
+          xhrFields: {withCredentials: true},
+          crossDomain:true,
           type:'GET', //GET
           async:false,    //或false,是否异步
           data:{

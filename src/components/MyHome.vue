@@ -6,7 +6,7 @@
             <div class="item-box  layer-photos-demo1 layer-photos-demo">
               <h3><router-link :to="{name:'Detail',query:{userArticleId:item.userArticleId}}" target="_blank">{{item.userArticleTitle}}</router-link></h3>
               <h5>发布于：<span>{{item.createTime}}</span></h5>
-              {{item.userArticleNote}}
+              <div v-html="item.userArticleNote"></div>
             </div>
             <div class="comment count">
               <a href="" @click.prevent="reply(item)">评论</a>

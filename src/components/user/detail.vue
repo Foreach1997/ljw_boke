@@ -7,7 +7,7 @@
           <div class="item-box  layer-photos-demo1 layer-photos-demo">
             <h3>{{userArticle.userArticleTitle}}</h3>
             <h5>发布于：<span>{{userArticle.createTime}}</span></h5>
-            {{userArticle.userArticleText}}
+            <div v-html="userArticle.userArticleText"></div>
             <img src="" alt="">
             <div class="count layui-clear">
               <span class="pull-left">阅读 <em>{{userArticle.visitCount}}</em></span>
@@ -54,8 +54,19 @@
       this.updateVisitCount();
       this.findUserArticle();
       this.findUserArticleReply();
+      this.photo();
     },
     methods:{
+      photo () {
+        layui.use('layer',function () {
+          layer.ready(function () { //为了layer.ext.js加载完毕再执行
+            layer.photos({
+              photos: '#ph'
+              //0-6的选择，指定弹出图片动画类型，默认随机
+            });
+          });
+        })
+      },
       updateVisitCount () {
         const that = this;
         const userArticleId = this.$route.query.userArticleId;
